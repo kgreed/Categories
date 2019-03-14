@@ -59,10 +59,11 @@ namespace categories.Module.Win.Controllers
 
             treeList.OptionsDragAndDrop.DragNodesMode = DragNodesMode.Multiple; // this is required to turn on drag drop
             treeList.OptionsDragAndDrop.DropNodesMode = DropNodesMode.Advanced;
-            treeList.DragObjectDrop += TreeList_DragObjectDrop;
+           
             treeList.AfterDropNode += TreeList_AfterDropNode;
             treeList.AfterDragNode += TreeList_AfterDragNode;
             UpdateNodesPositions(treeList.Nodes);
+
         }
 
         private void TreeList_AfterDragNode(object sender, AfterDragNodeEventArgs e)
@@ -71,13 +72,26 @@ namespace categories.Module.Win.Controllers
         }
         private void SaveNewRecordPosition(NodeEventArgs e)
         {
-            var nodes = e.Node.ParentNode == null ? e.Node.TreeList.Nodes
-                : e.Node.ParentNode.Nodes;
-            for (var i = 0; i < nodes.Count; i++)
+            var movedCategory =   e.Node.Tag as MCategory;
+            movedCategory.SortId = ((MCategory) e.Node.PrevVisibleNode.Tag).SortId+1;
+
+            var startingAt = movedCategory.SortId;
+            // cast as versus direct cast. Do i want invalid cast exceptions or null reference exceptions?
+            
+
+            var nodes = e.Node.ParentNode == null ? e.Node.TreeList.Nodes : e.Node.ParentNode.Nodes;
+            var mcategories = nodes.Select(x=>x.Tag as MCategory).OfType<MCategory>().
+                Where(x=>x.SortId >=startingAt && x != movedCategory ).
+                OrderBy(x => x.SortId).
+                ToList();
+             
+            for (var i = 0; i < mcategories.Count; i++)
             {
-                nodes[i].SetValue("SortId", i);
-                var categorory = nodes[i].Tag as MCategory;
-                categorory.SortId = i;
+                
+                mcategories[i].SortId = i+startingAt+1;
+
+                //var categorory = nodes[i].Tag as MCategory;
+                //categorory.SortId = i;
             }
             View.ObjectSpace.CommitChanges();
         }
@@ -94,11 +108,7 @@ namespace categories.Module.Win.Controllers
                 n.TreeList.SetNodeIndex(n, Convert.ToInt32(n.GetValue("SortId")));
             }
         }
-        private void TreeList_DragObjectDrop(object sender, DragObjectDropEventArgs e)
-        {
-            // never fires
-            var o = e.DragObject;
-        }
+      
 
         private void TreeList_AfterDropNode(object sender, AfterDropNodeEventArgs e)
         {
@@ -139,12 +149,10 @@ namespace categories.Module.Win.Controllers
             var droppedOnCategory = droppedOnNode.Tag as MCategory;
             var sourceCategory = sourceNode.Tag as MCategory;
             sourceCategory.Parent = droppedOnCategory; // for a blue icon it will be dropping on the parent of the highlighted node
-            var prevCategory = sourceNode.PrevVisibleNode.Tag as MCategory;
-            //var newName = prevCategory.Name + "-" + sourceCategory.Name;
-            //sourceCategory.Name = newName;
+           
             View.ObjectSpace.CommitChanges();
-            treeList.RefreshNode(sourceNode);
-            treeList.RefreshNode(droppedOnNode);
+            //treeList.RefreshNode(sourceNode);
+            //treeList.RefreshNode(droppedOnNode);
 
 
         }
@@ -172,7 +180,7 @@ namespace categories.Module.Win.Controllers
             if (!(View.Editor is TreeListEditor editor) || editor.TreeList == null) return;
             var treeList = editor.TreeList;
 
-            treeList.DragObjectDrop -= TreeList_DragObjectDrop;
+         
             treeList.AfterDropNode -= TreeList_AfterDropNode;
             treeList.AfterDragNode -= TreeList_AfterDragNode;
             // Unsubscribe from previously subscribed events and release other references and resources.

@@ -51,10 +51,11 @@ namespace categories.Module.BusinessObjects {
         {
             for (var i = 0; i < 20; i++)
             {
-                var cat = new MCategory {Name = $"A{i:D2}"};
+                var ch = (Char)(65+i);
+                var cat = new MCategory {Name = $"{ch}{i:D2}"};
                 for (var j = 0; j < 10; j++)
                 {
-                    var child = new MCategory {Name = $"A{i:D2}-B{j:D2}",SortId = j};
+                    var child = new MCategory {Name = $"{ch}{j:D2}",SortId = j};
                     cat.Children.Add(child);
                 }
 
