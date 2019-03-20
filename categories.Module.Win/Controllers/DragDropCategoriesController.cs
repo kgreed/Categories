@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using categories.Module.BusinessObjects;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
@@ -20,6 +22,8 @@ using DevExpress.Xpo;
 using DevExpress.Xpo.DB;
 using DevExpress.XtraTreeList;
 using DevExpress.XtraTreeList.Nodes;
+using DevExpress.XtraTreeList.Nodes.Operations;
+using ListView = DevExpress.ExpressApp.ListView;
 
 namespace categories.Module.Win.Controllers
 {
@@ -42,7 +46,7 @@ namespace categories.Module.Win.Controllers
             if (View.Editor == null) return;
             View.Editor.ControlsCreated += Editor_ControlsCreated;
          
-            var editor = View.Editor as TreeListEditor;
+         //   var editor = View.Editor as TreeListEditor;
 
             SetupDragDrop();
         }
@@ -90,10 +94,20 @@ namespace categories.Module.Win.Controllers
                 
                 mcategories[i].SortId = i+startingAt+1;
 
-                //var categorory = nodes[i].Tag as MCategory;
-                //categorory.SortId = i;
             }
             View.ObjectSpace.CommitChanges();
+
+            if (e.Node.ParentNode != null)
+            {
+                TreeList.RefreshNode(e.Node.ParentNode);
+            }
+            else
+            {
+                TreeList.Refresh();
+            }
+
+            StoreExpandedState();
+
         }
         private void UpdateNodesPositions(TreeListNodes nodes)
         {
@@ -119,31 +133,14 @@ namespace categories.Module.Win.Controllers
 
         }
 
-        private string GetNodeName(TreeListNode node)
-        {
-            try
-            {
-                if (!(node?.Tag is MCategory cat)) return "";
-                return cat.Name;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-           
-        }
+       
 
         private void DropNodes(TreeListNode sourceNode, TreeListNode droppedOnNode)
         {
 
-            if (!(View.Editor is TreeListEditor editor) || editor.TreeList == null) return;
-            var treeList = editor.TreeList;
-           
-            var sourceNodeName = GetNodeName(sourceNode);
-            var prevVisibleNodeName = GetNodeName(sourceNode.PrevVisibleNode);
-            var droppedOnNodeName= GetNodeName(droppedOnNode);
           
+
+
             droppedOnNode.Expand();
 
             var droppedOnCategory = droppedOnNode.Tag as MCategory;
@@ -151,11 +148,22 @@ namespace categories.Module.Win.Controllers
             sourceCategory.Parent = droppedOnCategory; // for a blue icon it will be dropping on the parent of the highlighted node
            
             View.ObjectSpace.CommitChanges();
-            //treeList.RefreshNode(sourceNode);
-            //treeList.RefreshNode(droppedOnNode);
 
-
+            StoreExpandedState();
         }
+
+        private void StoreExpandedState()
+        {
+            var editor = View.Editor as TreeListEditor;
+            foreach (TreeListNode node in editor.TreeList.Nodes)
+            {
+                (node.Tag as MCategory).Expanded = node.Expanded;
+            }
+        }
+
+        private TreeList TreeList => ( View.Editor as TreeListEditor)?.TreeList;
+          
+
         protected override void OnActivated()
         {
             base.OnActivated();
@@ -166,9 +174,12 @@ namespace categories.Module.Win.Controllers
                 col.SortIndex = -1;
                 col.SortOrder = DevExpress.Data.ColumnSortOrder.None;
             }
+
+            model.Columns["SortId"].SortIndex = 1;
+            model.Columns["SortId"].Width = 0;
             View.EditorChanged += View_EditorChanged;
             SetupEditor();
-            // Perform various tasks depending on the target View.
+             
         }
         protected override void OnViewControlsCreated()
         {
@@ -187,4 +198,5 @@ namespace categories.Module.Win.Controllers
             base.OnDeactivated();
         }
     }
+    
 }

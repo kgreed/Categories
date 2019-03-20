@@ -81,6 +81,8 @@ namespace categories.Module.BusinessObjects {
         public int SortId { get; set; }
         public virtual MCategory Parent { get; set; }
         public virtual IList<MCategory> Children { get; set; }
+        [NotMapped]
+        public bool Expanded { get; set; }
         [NotMapped, Browsable(false), RuleFromBoolProperty("HCategoryCircularReferences", DefaultContexts.Save, "Circular refrerence detected. To correct this error, set the Parent property to another value.", UsedProperties = "Parent")]
         public Boolean IsValid
         {
