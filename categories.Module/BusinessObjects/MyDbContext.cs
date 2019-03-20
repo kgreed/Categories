@@ -24,7 +24,7 @@ namespace categories.Module.BusinessObjects {
 		}
 
         
-
+        
         public MyDbContext(DbConnection connection)
 			: base(connection, false) {
             Database.SetInitializer(new MyInitializer());
@@ -51,7 +51,7 @@ namespace categories.Module.BusinessObjects {
         {
             for (var i = 0; i < 20; i++)
             {
-                var ch = (Char)(65+i);
+                var ch = (char)(65+i);
                 var cat = new MCategory {Name = $"{ch}{i:D2}"};
                 for (var j = 0; j < 10; j++)
                 {
@@ -78,17 +78,20 @@ namespace categories.Module.BusinessObjects {
         [Key]
         public Int32 ID { get; protected set; }
         public String Name { get; set; }
+        //[Browsable(false)]  causes error when I try to sort
         public int SortId { get; set; }
+        [Browsable(false)]
         public virtual MCategory Parent { get; set; }
         public virtual IList<MCategory> Children { get; set; }
         [NotMapped]
+        [Browsable(false)]
         public bool Expanded { get; set; }
         [NotMapped, Browsable(false), RuleFromBoolProperty("HCategoryCircularReferences", DefaultContexts.Save, "Circular refrerence detected. To correct this error, set the Parent property to another value.", UsedProperties = "Parent")]
         public Boolean IsValid
         {
             get
             {
-                MCategory currentObj = Parent;
+                var currentObj = Parent;
                 while (currentObj != null)
                 {
                     if (currentObj == this)

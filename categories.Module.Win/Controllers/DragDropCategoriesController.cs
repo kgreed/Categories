@@ -163,7 +163,7 @@ namespace categories.Module.Win.Controllers
 
         private TreeList TreeList => ( View.Editor as TreeListEditor)?.TreeList;
           
-
+        
         protected override void OnActivated()
         {
             base.OnActivated();
@@ -175,10 +175,11 @@ namespace categories.Module.Win.Controllers
                 col.SortOrder = DevExpress.Data.ColumnSortOrder.None;
             }
 
-            model.Columns["SortId"].SortIndex = 1;
-            model.Columns["SortId"].Width = 0;
-            View.EditorChanged += View_EditorChanged;
-            SetupEditor();
+           var sortCol = model.Columns["SortId"];
+           sortCol.SortIndex = 0;
+           sortCol.Width = 0;
+           View.EditorChanged += View_EditorChanged;
+           SetupEditor();
              
         }
         protected override void OnViewControlsCreated()
