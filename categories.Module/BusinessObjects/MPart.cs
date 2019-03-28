@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DevExpress.ExpressApp.DC;
 using DevExpress.Persistent.Base;
 
 namespace categories.Module.BusinessObjects
@@ -10,7 +11,7 @@ namespace categories.Module.BusinessObjects
     public class MPart
     {
         public MPart() {
-           // Categories= new BindingList<MCategory>();  
+            Categories= new BindingList<MCategory>();  
         }
 
         [Browsable(false)]
@@ -24,6 +25,7 @@ namespace categories.Module.BusinessObjects
         [NotMapped]
         public bool TagToSetPriority { get; set; }
 
-        //  public virtual IList<MCategory> Categories { get; set; }
+        [Aggregated]
+        public virtual IList<MCategory> Categories { get; set; }
     }
 }

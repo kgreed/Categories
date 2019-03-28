@@ -54,5 +54,24 @@ namespace categories.Module.Win.Controllers
               
              View.ObjectSpace.Refresh();
         }
+
+        private void actOutdent_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            var category = e.CurrentObject as MCategory;
+            if (category?.Parent == null) return;
+            category.Parent = category.Parent?.Parent;
+            ObjectSpace.SetModified(category);
+            ObjectSpace.CommitChanges();
+        }
+
+        private void actIndent_Execute(object sender, SimpleActionExecuteEventArgs e)
+        {
+            //var category = e.CurrentObject as MCategory;
+            //View.
+            //if (category?.Parent == null) return;
+            //category.Parent = category.Parent?.Parent;
+            //ObjectSpace.SetModified(category);
+            //ObjectSpace.CommitChanges();
+        }
     }
 }

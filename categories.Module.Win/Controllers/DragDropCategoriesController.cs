@@ -137,18 +137,11 @@ namespace categories.Module.Win.Controllers
 
         private void DropNodes(TreeListNode sourceNode, TreeListNode droppedOnNode)
         {
-
-          
-
-
             droppedOnNode.Expand();
-
             var droppedOnCategory = droppedOnNode.Tag as MCategory;
             var sourceCategory = sourceNode.Tag as MCategory;
             sourceCategory.Parent = droppedOnCategory; // for a blue icon it will be dropping on the parent of the highlighted node
-           
             View.ObjectSpace.CommitChanges();
-
             StoreExpandedState();
         }
 

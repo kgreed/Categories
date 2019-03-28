@@ -20,9 +20,9 @@ namespace categories.Module.BusinessObjects
         [Key]
         public Int32 ID { get; protected set; }
 
-        //[Required]
+        [Required]
 
-        //public MPart MPart { get; set; }
+        public MPart MPart { get; set; }
         public String Name { get; set; }
         //[Browsable(false)]  causes error when I try to sort
         public int SortId { get; set; }
