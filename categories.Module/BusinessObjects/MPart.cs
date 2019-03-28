@@ -3,11 +3,13 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DevExpress.ExpressApp.DC;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 
 namespace categories.Module.BusinessObjects
 {
     [NavigationItem("Home")]
+    [DefaultProperty("Name")]
     public class MPart
     {
         public MPart() {
@@ -17,7 +19,7 @@ namespace categories.Module.BusinessObjects
         [Browsable(false)]
         [Key]
         public int Id { get; set; }
-
+        [ModelDefault("Caption", "PartName")]
         public string Name { get; set; }
 
         public int Priority { get; set; }
@@ -26,6 +28,6 @@ namespace categories.Module.BusinessObjects
         public bool TagToSetPriority { get; set; }
 
         [Aggregated]
-        public virtual IList<MCategory> Categories { get; set; }
+        public IList<MCategory> Categories { get; set; }
     }
 }

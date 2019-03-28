@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Base.General;
 using DevExpress.Persistent.Validation;
@@ -18,11 +19,14 @@ namespace categories.Module.BusinessObjects
         }
         [Browsable(false)]
         [Key]
-        public Int32 ID { get; protected set; }
+        public Int32 ID { get; set; }
 
-        [Required]
-
+        [System.ComponentModel.DataAnnotations.Required]
+        [VisibleInDetailView(true)]
         public MPart MPart { get; set; }
+
+       // public string PartName => MPart.Name;   // throws a null exception
+        [ModelDefault("Caption","CatName")]
         public String Name { get; set; }
         //[Browsable(false)]  causes error when I try to sort
         public int SortId { get; set; }

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.simpleAction1 = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             this.actIndent = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
-            this.actOutdent = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
+            this.actionOutdent = new DevExpress.ExpressApp.Actions.SimpleAction(this.components);
             // 
             // simpleAction1
             // 
@@ -49,19 +49,18 @@
             this.actIndent.ToolTip = null;
             this.actIndent.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.actIndent_Execute);
             // 
-            // actOutdent
+            // actionOutdent
             // 
-            this.actOutdent.Caption = "Outdent";
-            this.actOutdent.ConfirmationMessage = null;
-            this.actOutdent.Id = "Indent";
-            this.actOutdent.ToolTip = null;
-            this.actOutdent.Execute += new DevExpress.ExpressApp.Actions.SimpleActionExecuteEventHandler(this.actOutdent_Execute);
+            this.actionOutdent.Caption = "Outdent";
+            this.actionOutdent.ConfirmationMessage = null;
+            this.actionOutdent.Id = "Outdent";
+            this.actionOutdent.ToolTip = null;
             // 
             // ActionController
             // 
             this.Actions.Add(this.simpleAction1);
             this.Actions.Add(this.actIndent);
-            this.Actions.Add(this.actOutdent);
+            this.Actions.Add(this.actionOutdent);
 
         }
 
@@ -69,6 +68,6 @@
 
         private DevExpress.ExpressApp.Actions.SimpleAction simpleAction1;
         private DevExpress.ExpressApp.Actions.SimpleAction actIndent;
-        private DevExpress.ExpressApp.Actions.SimpleAction actOutdent;
+        private DevExpress.ExpressApp.Actions.SimpleAction actionOutdent;
     }
 }
