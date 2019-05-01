@@ -82,7 +82,7 @@ namespace categories.Module.BusinessObjects
         void IXafEntityObject.OnSaving()
         {
             // Place the code that is executed each time the entity is saved here.
-            DataPutters.PutMCategory(this,objectSpace);
+            DataPutters.PutMCategory(this,(NonPersistentObjectSpace)objectSpace);
         }
         #endregion
 

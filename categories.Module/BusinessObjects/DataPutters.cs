@@ -9,12 +9,15 @@ namespace categories.Module.BusinessObjects
 {
     public static class DataPutters
     {
-        public static void PutMCategory(NPCategory nPCategory, IObjectSpace objectSpace)
+        public static void PutMCategory(NPCategory nPCategory, NonPersistentObjectSpace objectSpace)
         {
-            using (var connect = MakeConnect(objectSpace))
+            var persistentObjectSpace = objectSpace.AdditionalObjectSpaces.FirstOrDefault();
+            using (var connect = MakeConnect(persistentObjectSpace))
             {
-               var category =connect.Categories.Find(nPCategory.Id);
-                category.MPart = nPCategory.MPart;
+                var category =connect.Categories.Find(nPCategory.Id);
+                var part = connect.Parts.Find(nPCategory.PartId);
+                category.MPart = part;
+               // connect.Entry(category).State = System.Data.Entity.EntityState.Modified;
                 connect.SaveChanges();
 
             }
