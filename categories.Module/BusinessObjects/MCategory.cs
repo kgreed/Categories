@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DevExpress.ExpressApp.Data;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,8 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Base;
 using DevExpress.Persistent.Base.General;
 using DevExpress.Persistent.Validation;
+using KeyAttribute = DevExpress.ExpressApp.Data.KeyAttribute;
+using RequiredAttribute = DevExpress.ExpressApp.Model.RequiredAttribute;
 
 namespace categories.Module.BusinessObjects
 {
@@ -21,11 +24,12 @@ namespace categories.Module.BusinessObjects
         [Key]
         public Int32 ID { get; set; }
 
-        [System.ComponentModel.DataAnnotations.Required]
+       // [System.ComponentModel.DataAnnotations.Required]  wrong, use XAF
+       [Required]
         [VisibleInDetailView(true)]
-        public MPart MPart { get; set; }
+        public virtual MPart MPart { get; set; }
 
-       // public string PartName => MPart.Name;   // throws a null exception
+        // public string PartName => MPart?.Name;   
         [ModelDefault("Caption","CatName")]
         public String Name { get; set; }
         //[Browsable(false)]  causes error when I try to sort
@@ -36,7 +40,7 @@ namespace categories.Module.BusinessObjects
         [NotMapped]
         [Browsable(false)]
         public bool Expanded { get; set; }
-        [NotMapped, Browsable(false), RuleFromBoolProperty("HCategoryCircularReferences", DefaultContexts.Save, "Circular refrerence detected. To correct this error, set the Parent property to another value.", UsedProperties = "Parent")]
+        [NotMapped, Browsable(false), RuleFromBoolProperty("HCategoryCircularReferences", DefaultContexts.Save, "Circular reference detected. To correct this error, set the Parent property to another value.", UsedProperties = "Parent")]
         public Boolean IsValid
         {
             get
