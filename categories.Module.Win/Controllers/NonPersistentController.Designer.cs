@@ -1,6 +1,6 @@
 ﻿namespace categories.Module.Win.Controllers
 {
-    partial class NPListViewWindowsController
+    partial class NonPersistentController
     {
         /// <summary>
         /// Required designer variable.

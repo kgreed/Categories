@@ -11,7 +11,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.Validation;
 
-namespace categories.Module.BusinessObjects
+namespace categories.Module.BusinessObjects.NonPersistent
 {
     [DomainComponent]
     [DefaultClassOptions]
@@ -19,7 +19,7 @@ namespace categories.Module.BusinessObjects
     //[DefaultProperty("SampleProperty")]
     //[DefaultListViewOptions(MasterDetailMode.ListViewOnly, false, NewItemRowPosition.None)]
     // Specify more UI options using a declarative approach (https://documentation.devexpress.com/#eXpressAppFramework/CustomDocument112701).
-    public class NPCategory : IXafEntityObject, IObjectSpaceLink, INotifyPropertyChanged, ICanEditInLIne
+    public class NPThing : IXafEntityObject, IObjectSpaceLink, INotifyPropertyChanged
     {
         private IObjectSpace objectSpace;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -29,37 +29,31 @@ namespace categories.Module.BusinessObjects
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        public NPCategory()
+        public NPThing()
         {
-           // Oid = Guid.NewGuid();
-
+            Oid = Guid.NewGuid();
         }
 
         [DevExpress.ExpressApp.Data.Key]
         [Browsable(false)]  // Hide the entity identifier from UI.
-       // public Guid Oid { get; set; }
-       public int Id { get; set; }
-        public string CategoryName { get; set; }
-        public string PartName { get; set; }
-         
-        public virtual MPart MPart { get; set; }
-        private int MPart_Id { get; set; }
-      
-        [XafDisplayName("MyPartId"), ToolTip("My hint message")]
-        //[ModelDefault("EditMask", "00"), VisibleInListView(false)]
-        [RuleRequiredField(DefaultContexts.Save)]
-        public int PartId
-        {
-            get { return MPart_Id; }
-            set
-            {
-                if (MPart_Id!= value)
-                {
-                    MPart_Id  = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public Guid Oid { get; set; }
+
+        //private string sampleProperty;
+        //[XafDisplayName("My display name"), ToolTip("My hint message")]
+        //[ModelDefault("EditMask", "(000)-00"), VisibleInListView(false)]
+        //[RuleRequiredField(DefaultContexts.Save)]
+        //public string SampleProperty
+        //{
+        //    get { return sampleProperty; }
+        //    set
+        //    {
+        //        if (sampleProperty != value)
+        //        {
+        //            sampleProperty = value;
+        //            OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {
@@ -77,12 +71,10 @@ namespace categories.Module.BusinessObjects
         void IXafEntityObject.OnLoaded()
         {
             // Place the code that is executed each time the entity is loaded here.
-            MPart = DataGetters.GetMPart(MPart_Id, objectSpace);
         }
         void IXafEntityObject.OnSaving()
         {
             // Place the code that is executed each time the entity is saved here.
-            DataPutters.PutMCategory(this,(NonPersistentObjectSpace)objectSpace);
         }
         #endregion
 
@@ -98,5 +90,11 @@ namespace categories.Module.BusinessObjects
         #region INotifyPropertyChanged members (see http://msdn.microsoft.com/en-us/library/system.componentmodel.inotifypropertychanged(v=vs.110).aspx)
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
+
+
+        public static List<INonPersistent> GetData(IObjectSpace space)
+        {
+            return new List<INonPersistent>();
+        }
     }
 }
