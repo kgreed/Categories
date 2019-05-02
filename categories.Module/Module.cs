@@ -40,6 +40,31 @@ namespace categories.Module {
         public override void Setup(XafApplication application) {
             base.Setup(application);
             // Manage various aspects of the application UI and behavior at the module level.
+            application.ObjectSpaceCreated += Application_ObjectSpaceCreated;
+
         }
+
+        private void Application_ObjectSpaceCreated(object sender, ObjectSpaceCreatedEventArgs e)
+        {
+            if (e.ObjectSpace is NonPersistentObjectSpace)
+            {
+                IObjectSpace additionalObjectSpace = Application.CreateObjectSpace(typeof(MCategory));
+                ((NonPersistentObjectSpace)e.ObjectSpace).AdditionalObjectSpaces.Add(additionalObjectSpace);
+                ((NonPersistentObjectSpace)e.ObjectSpace).ObjectGetting += ObjectSpace_ObjectGetting;
+                e.ObjectSpace.Disposed += (s, args) => {
+                    ((NonPersistentObjectSpace)s).ObjectGetting -= ObjectSpace_ObjectGetting;
+                    additionalObjectSpace.Dispose();
+                };
+            }
+        }
+        private void ObjectSpace_ObjectGetting(object sender, ObjectGettingEventArgs e)
+        {
+            if (e.SourceObject is IObjectSpaceLink)
+            {
+                e.TargetObject = e.SourceObject;
+                ((IObjectSpaceLink)e.TargetObject).ObjectSpace = (IObjectSpace)sender;
+            }
+        }
+         
     }
 }
