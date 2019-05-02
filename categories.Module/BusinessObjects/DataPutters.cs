@@ -17,10 +17,11 @@ namespace categories.Module.BusinessObjects
                 var category =connect.Categories.Find(nPCategory.Id);
                 var part = connect.Parts.Find(nPCategory.PartId);
                 category.MPart = part;
-               // connect.Entry(category).State = System.Data.Entity.EntityState.Modified;
+                
                 connect.SaveChanges();
 
             }
+          
         }
 
         public static MyDbContext MakeConnect(IObjectSpace objectSpace)

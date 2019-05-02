@@ -18,7 +18,7 @@ namespace categories.Module.Win.Controllers
         {
             //InitializeComponent();
 
-            objectsCache = DataGetters.GetNPCategories();
+          //  objectsCache = DataGetters.GetNPCategories();
             
         }
         public NPListViewWindowsController()
@@ -26,7 +26,14 @@ namespace categories.Module.Win.Controllers
         {
             TargetWindowType = WindowType.Main;
         }
-    
+        private void ObjectSpace_CustomRefresh(object sender, HandledEventArgs e)
+        {
+             
+            IObjectSpace objectSpace = (IObjectSpace)sender;
+            objectsCache = DataGetters.GetNPCategories();
+            objectSpace.ReloadCollection(objectsCache);
+         
+        }
 
         private void NonPersistentObjectSpace_ObjectsGetting(Object sender, ObjectsGettingEventArgs e)
         {
@@ -37,6 +44,7 @@ namespace categories.Module.Win.Controllers
                 objects.AllowNew = false;
                 objects.AllowEdit = true;
                 objects.AllowRemove = false;
+                objectsCache = DataGetters.GetNPCategories();
                 foreach (NPCategory obj in objectsCache)
                 {
                     objects.Add(objectSpace.GetObject<NPCategory>(obj));
@@ -44,7 +52,13 @@ namespace categories.Module.Win.Controllers
                 e.Objects = objects;
             }
         }
-
+        private void NonPersistentObjectSpace_ObjectGetting(object sender, ObjectGettingEventArgs e)
+        {
+            if (e.SourceObject is IObjectSpaceLink)
+            {
+                ((IObjectSpaceLink)e.TargetObject).ObjectSpace = (IObjectSpace)sender;
+            }
+        }
         private void NonPersistentObjectSpace_ObjectByKeyGetting(object sender, ObjectByKeyGettingEventArgs e)
         {
             IObjectSpace objectSpace = (IObjectSpace)sender;
@@ -57,13 +71,7 @@ namespace categories.Module.Win.Controllers
                 }
             }
         }
-        private void NonPersistentObjectSpace_ObjectGetting(object sender, ObjectGettingEventArgs e)
-        {
-            if (e.SourceObject is IObjectSpaceLink)
-            {
-                ((IObjectSpaceLink)e.TargetObject).ObjectSpace = (IObjectSpace)sender;
-            }
-        }
+  
         private void NonPersistentObjectSpace_Committing(Object sender, CancelEventArgs e)
         {
             IObjectSpace objectSpace = (IObjectSpace)sender;
@@ -96,8 +104,13 @@ namespace categories.Module.Win.Controllers
                 nonPersistentObjectSpace.ObjectByKeyGetting += NonPersistentObjectSpace_ObjectByKeyGetting;
                 nonPersistentObjectSpace.ObjectGetting += NonPersistentObjectSpace_ObjectGetting;
                 nonPersistentObjectSpace.Committing += NonPersistentObjectSpace_Committing;
+                e.ObjectSpace.CustomRefresh += ObjectSpace_CustomRefresh;
             }
+            
         }
+
+   
+
         protected override void OnActivated()
         {
             base.OnActivated();
