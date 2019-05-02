@@ -149,11 +149,11 @@
     <Compile Include="Controllers\InLineEditViewController.Designer.cs">
       <DependentUpon>InLineEditViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\NPListViewWindowsController.cs">
+    <Compile Include="Controllers\NonPersistentController.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controllers\NPListViewWindowsController.Designer.cs">
-      <DependentUpon>NPListViewWindowsController.cs</DependentUpon>
+    <Compile Include="Controllers\NonPersistentController.Designer.cs">
+      <DependentUpon>NonPersistentController.cs</DependentUpon>
     </Compile>
     <Compile Include="Controllers\NodeStateController.cs">
       <SubType>Component</SubType>

@@ -92,7 +92,9 @@
     <Compile Include="BusinessObjects\MPart.cs" />
     <Compile Include="BusinessObjects\MyDbContext.cs" />
     <Compile Include="BusinessObjects\MyInitializer.cs" />
-    <Compile Include="BusinessObjects\NPCategory.cs" />
+    <Compile Include="BusinessObjects\NonPersistent\INonPersistent.cs" />
+    <Compile Include="BusinessObjects\NonPersistent\NPCategory.cs" />
+    <Compile Include="BusinessObjects\NonPersistent\NPThing.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Module.cs">
       <SubType>Component</SubType>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.EF;
 using System.Linq;
+using System.Reflection;
+using DevExpress.ExpressApp.DC;
 
 namespace categories.Module.BusinessObjects
 {
@@ -33,6 +35,12 @@ namespace categories.Module.BusinessObjects
                 return results;
 
             }
+        }
+
+        public static List<INonPersistent> GetNPObjects(ITypeInfo type, IObjectSpace space)
+        {
+            MethodInfo link = type.Type.GetMethod("GetData", BindingFlags.Public | BindingFlags.Static);
+            return (List<INonPersistent>)link.Invoke(null, new object[] { space });
         }
 
         internal static MPart GetMPart(int partId, IObjectSpace objectSpace)

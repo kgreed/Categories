@@ -44,7 +44,7 @@ namespace categories.Module.Win.Controllers
         {
             base.OnActivated();
             View.ControlsCreated += ViewOnControlsCreated;
-           // ((dynamic)View.Model).NewItemRowPosition = NewItemRowPosition.Bottom;
+           
         }
 
         protected override void OnDeactivated()

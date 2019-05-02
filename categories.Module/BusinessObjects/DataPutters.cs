@@ -28,7 +28,6 @@ namespace categories.Module.BusinessObjects
         {
             var oc = ((EFObjectSpace)objectSpace).ObjectContext;
             return new MyDbContext(oc);
-
         }
     }
 }
