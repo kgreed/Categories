@@ -11,7 +11,9 @@ using DevExpress.Persistent.BaseImpl.EF;
 
 namespace categories.Module.BusinessObjects {
 	public class MyDbContext : DbContext {
-		public MyDbContext(String connectionString)
+        
+
+        public MyDbContext(String connectionString)
 			: base(connectionString) {
             Database.SetInitializer(new MyInitializer());
 		}
@@ -26,7 +28,13 @@ namespace categories.Module.BusinessObjects {
 			: base("name=ConnectionString") {
             Database.SetInitializer(new MyInitializer());
         }
-		public DbSet<ModuleInfo> ModulesInfo { get; set; }
+
+        public MyDbContext(ObjectContext oc) : base(oc,false)
+        {
+             
+        }
+
+        public DbSet<ModuleInfo> ModulesInfo { get; set; }
 		//public DbSet<HCategory> HCategories { get; set; }
         public DbSet<MCategory> Categories { get; set; }
 
