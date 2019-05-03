@@ -26,7 +26,7 @@
             this.module1 = new DevExpress.ExpressApp.SystemModule.SystemModule();
             this.module2 = new DevExpress.ExpressApp.Win.SystemModule.SystemWindowsFormsModule();
             this.module3 = new categories.Module.categoriesModule();
-            this.module4 = new categories.Module.Win.categoriesWindowsFormsModule();
+            //this.module4 = new categories.Module.Win.categoriesWindowsFormsModule();
             this.objectsModule = new DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule();
             this.treeListEditorsModuleBase = new DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase();
             this.treeListEditorsWindowsFormsModule = new DevExpress.ExpressApp.TreeListEditors.Win.TreeListEditorsWindowsFormsModule();
@@ -39,7 +39,7 @@
             this.Modules.Add(this.module1);
             this.Modules.Add(this.module2);
             this.Modules.Add(this.module3);
-            this.Modules.Add(this.module4);
+            //this.Modules.Add(this.module4);
             this.Modules.Add(this.objectsModule);
             this.Modules.Add(this.treeListEditorsModuleBase);
             this.Modules.Add(this.treeListEditorsWindowsFormsModule);
@@ -56,7 +56,7 @@
         private DevExpress.ExpressApp.SystemModule.SystemModule module1;
         private DevExpress.ExpressApp.Win.SystemModule.SystemWindowsFormsModule module2;
         private categories.Module.categoriesModule module3;
-        private categories.Module.Win.categoriesWindowsFormsModule module4;
+        //private categories.Module.Win.categoriesWindowsFormsModule module4;
         private DevExpress.ExpressApp.Objects.BusinessClassLibraryCustomizationModule objectsModule;
         private DevExpress.ExpressApp.TreeListEditors.TreeListEditorsModuleBase treeListEditorsModuleBase;
         private DevExpress.ExpressApp.TreeListEditors.Win.TreeListEditorsWindowsFormsModule treeListEditorsWindowsFormsModule;
