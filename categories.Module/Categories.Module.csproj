@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>categories.Module</RootNamespace>
     <AssemblyName>categories.Module</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -61,10 +61,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\DataGetters.cs" />
+    <Compile Include="BusinessObjects\DataPutters.cs" />
+    <Compile Include="BusinessObjects\ICanEditInLIne.cs" />
     <Compile Include="BusinessObjects\MCategory.cs" />
     <Compile Include="BusinessObjects\MPart.cs" />
     <Compile Include="BusinessObjects\MyDbContext.cs" />
     <Compile Include="BusinessObjects\MyInitializer.cs" />
+    <Compile Include="BusinessObjects\NonPersistent\INonPersistent.cs" />
+    <Compile Include="BusinessObjects\NonPersistent\NPCategory.cs" />
+    <Compile Include="BusinessObjects\NonPersistent\NPThing.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Module.cs">
       <SubType>Component</SubType>
@@ -116,9 +122,6 @@
       <Version>18.2.8</Version>
     </PackageReference>
     <PackageReference Include="DevExpress.ExpressApp.EF">
-      <Version>18.2.8</Version>
-    </PackageReference>
-    <PackageReference Include="DevExpress.ExpressApp.Win">
       <Version>18.2.8</Version>
     </PackageReference>
     <PackageReference Include="EntityFramework">

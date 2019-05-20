@@ -290,7 +290,7 @@ namespace categories.Module.Win.Controllers
                 var oldTasks = listRows.ConvertAll(x => (MPart)x).ToList().Where(x => x?.Priority != null)
                     .Where(x => x.Priority > 0);
                 // var hasOldTasks = oldTasks.Any();
-                var i = 1;
+                //var i = 1;
                 if (listRows == null) return;
                 var rows = listRows.ConvertAll(x => (MPart)x);
                 var taskResults = rows as MPart[] ?? rows.ToArray();
