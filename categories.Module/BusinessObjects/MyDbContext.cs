@@ -7,7 +7,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using DevExpress.Data.Helpers;
 using DevExpress.ExpressApp.EF.Updating;
-using DevExpress.Persistent.BaseImpl.EF;
+ 
 
 namespace categories.Module.BusinessObjects {
 	public class MyDbContext : DbContext {

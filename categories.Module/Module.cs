@@ -31,7 +31,7 @@ namespace categories.Module {
         }
         public categoriesModule() {
             InitializeComponent();
-			AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.EF.HCategory));
+			AdditionalExportedTypes.Add(typeof(DevExpress.Persistent.BaseImpl.HCategory));
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
             ModuleUpdater updater = new DatabaseUpdate.Updater(objectSpace, versionFromDB);
